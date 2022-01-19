@@ -5,12 +5,11 @@ import './App.css';
 
 function App() {
   const [movies, setMovies] = useState([]);
-  const movieFetchHandler = () => {
-    fetch('https://swapi.dev/api/films/').then((response)=>{
-      return response.json();
-      //json 형식을 javaScript object형식으로 변경
-    }).then((data)=>{
-      const movieList = data.results.map((movie) => {
+  async function movieFetchHandler () {
+    const firstData = await fetch('https://swapi.dev/api/films/')
+    const secondData = await firstData.json();
+    
+    const movieList = secondData.results.map((movie) => {
         return {
           id : movie.episode_id,
           title : movie.title,
@@ -19,7 +18,7 @@ function App() {
         };
       });
       setMovies(movieList);
-    });
+    
   };
 
   return (
